@@ -80,6 +80,34 @@ I₃/I₁ = 0,05/0,1 = 0,5 → 0,5 × 7,5 = <span class="cur">3,75 cm</span> &nb
 </section>
 
 <section class="slide">
+<h1>Método B · Teoría: [Z]·[I] = [V]</h1>
+<div class="card row big">
+<span class="mat"><span>Z₁₁</span><span>Z₁₂</span><span>Z₂₁</span><span>Z₂₂</span></span>
+<span>·</span>
+<span class="mat"><span>I<sub>a</sub></span><span> </span><span>I<sub>b</sub></span><span> </span></span>
+<span>=</span>
+<span class="mat"><span>Vₛ</span><span> </span><span>0</span><span> </span></span></div>
+<div class="card"><b>[Z]</b> matriz de impedancias (2×2, una fila por malla) · <b>[I]</b> corrientes de malla (incógnitas) · <b>[V]</b> fuentes de cada malla.<br>Subíndices: <b>primero = fila</b> (ecuación de la malla i), <b>segundo = columna</b> (corriente I<sub>j</sub>).</div>
+<div class="card"><span class="acc">Z₁₁</span> = todo lo de la malla 1 = j10 + 10 = <b>10 + j10 Ω</b><br>
+<span class="acc">Z₂₂</span> = todo lo de la malla 2 = 10 − j20 Ω<br>
+<span class="acc">Z₁₂ = Z₂₁</span> = −(lo compartido) = <b>−10 Ω</b> (resistor común; negativo porque las dos corrientes horarias van en sentido opuesto allí)<br>
+<small>Diagonal: siempre positiva · fuera de la diagonal: negativa (mallas del mismo sentido) · sin elemento común: 0 · sin fuentes dependientes: simétrica.</small></div>
+<div class="card"><b>[V]</b>: cada fila suma las fuentes de esa malla, con + si impulsan en el sentido de la corriente de malla. Acá (Vₛ, 0), porque la malla 2 no tiene fuente.</div>
+</section>
+
+<section class="slide">
+<h1>Método B · Δ y la columna que se reemplaza</h1>
+<div class="card eq"><span class="acc">Δ</span> = det[Z] = Z₁₁·Z₂₂ − Z₁₂·Z₂₁ &nbsp;<small>(diagonal principal menos diagonal secundaria)</small><br>= (10+j10)(10−j20) − (−10)(−10) = <b>200 − j100</b></div>
+<div class="card row big"><b>Δ₁</b> (para I<sub>a</sub>): columna 1 ← [V]
+<span class="mat"><span style="color:var(--acc)">Vₛ</span><span>Z₁₂</span><span style="color:var(--acc)">0</span><span>Z₂₂</span></span>
+= Vₛ·Z₂₂ − Z₁₂·0 = <b>1000 − j2000</b></div>
+<div class="card row big"><b>Δ₂</b> (para I<sub>b</sub>): columna 2 ← [V]
+<span class="mat"><span>Z₁₁</span><span style="color:var(--acc)">Vₛ</span><span>Z₂₁</span><span style="color:var(--acc)">0</span></span>
+= Z₁₁·0 − Vₛ·Z₂₁ = <b>1000</b></div>
+<div class="card">Regla: <b>I<sub>j</sub> = Δ<sub>j</sub>/Δ</b>. Δ es común a todas las incógnitas; Δ<sub>j</sub> contiene cómo las fuentes impulsan esa malla. Si Δ = 0 no hay solución única: error de planteo.<br><small>Errores típicos: olvidar el signo − de lo compartido, reemplazar la columna equivocada, restar la diagonal principal en vez de la secundaria.</small></div>
+</section>
+
+<section class="slide">
 <h1>Método B · Mallas: ecuaciones (Vₛ = 100∠0°)</h1>
 <div class="card eq">Malla 1: &nbsp;(10 + j10)·I<sub>a</sub> − 10·I<sub>b</sub> = 100<br>Malla 2: &nbsp;−10·I<sub>a</sub> + (10 − j20)·I<sub>b</sub> = 0</div>
 <div class="card big row">
