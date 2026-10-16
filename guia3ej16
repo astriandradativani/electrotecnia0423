@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Problema 16 – Diagrama fasorial (Electrotecnia)</title>
+<style>
+:root{--bg:#0f172a;--panel:#1e293b;--tx:#f1f5f9;--mut:#94a3b8;--cur:#fb7185;--vol:#60a5fa;--vl:#34d399;--acc:#fbbf24;--grid:#334155;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f8fafc;--panel:#e2e8f0;--tx:#0f172a;--mut:#475569;--cur:#be123c;--vol:#1d4ed8;--vl:#047857;--acc:#b45309;--grid:#cbd5e1;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f8fafc;--panel:#e2e8f0;--tx:#0f172a;--mut:#475569;--cur:#be123c;--vol:#1d4ed8;--vl:#047857;--acc:#b45309;--grid:#cbd5e1;color-scheme:light}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:clamp(16px,2.2vw,24px)/1.5 system-ui,Segoe UI,Roboto,sans-serif}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 24px;background:var(--panel);font-size:.7em;color:var(--mut)}
+header b{color:var(--tx)}
+.slide{display:none;padding:20px 28px;max-width:1100px;margin:auto}
+.slide.on{display:block;animation:f .35s}
+@keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+h1{font-size:1.7em;margin:.1em 0 .4em}
+h2{font-size:1.25em;margin:.1em 0 .5em;color:var(--acc)}
+.card{background:var(--panel);border-radius:14px;padding:14px 18px;margin:10px 0;overflow-x:auto}
+.cur{color:var(--cur);font-weight:700}.vol{color:var(--vol);font-weight:700}.vl{color:var(--vl);font-weight:700}.acc{color:var(--acc);font-weight:700}
+.eq{font-family:Georgia,'Times New Roman',serif;font-size:1.1em;margin:.3em 0}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:center}
+.mat{display:inline-grid;grid-template-columns:auto auto;gap:4px 22px;padding:6px 14px;border-left:3px solid var(--tx);border-right:3px solid var(--tx);border-radius:8px;font-family:Georgia,serif;vertical-align:middle;margin:0 6px}
+.big{font-size:1.25em}
+table{border-collapse:collapse;width:100%}th,td{border:1px solid var(--grid);padding:6px 10px;text-align:center}th{background:var(--panel)}
+.res{background:var(--acc);color:#111;border-radius:12px;padding:10px 16px;font-weight:700;display:inline-block;margin:6px 0}
+svg{width:100%;height:auto;max-height:68vh;background:var(--panel);border-radius:14px}
+nav{position:sticky;bottom:0;display:flex;justify-content:center;gap:10px;padding:10px;background:var(--bg)}
+button{font:inherit;font-size:.8em;padding:8px 22px;border-radius:10px;border:0;background:var(--vol);color:#fff;cursor:pointer}
+button.alt{background:var(--panel);color:var(--tx)}
+.legend span{margin-right:16px;font-size:.8em}
+</style>
+</head>
+<body>
+<header><span><b>Electrotecnia 4423</b> · Guía N° 3 · Problema 16</span><span id="ct"></span></header>
+
+<section class="slide on">
+<h1>Diagrama fasorial por mallas y Kramer</h1>
+<div class="card">Con V<sub>1</sub> como referencia (5 cm, 0°) e I<sub>1</sub> = 7,5 cm, hallar la longitud de las flechas de <span class="cur">I₃</span>, <span class="cur">I₂</span> y <span class="vol">Vₛ</span>.</div>
+<div class="card"><h2>Circuito</h2>
+<svg viewBox="0 0 600 240" style="max-height:36vh" stroke="currentColor" fill="none" stroke-width="2.2" stroke-linejoin="round">
+<defs><marker id="ma" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0 0L5 2.5L0 5z" fill="var(--cur)" stroke="none"/></marker></defs>
+<path d="M110 50H150M250 50H500V112M500 128V210H110V156M110 104V50M340 50V90M340 170V210"/>
+<path d="M150 50a12.5 12.5 0 0 1 25 0a12.5 12.5 0 0 1 25 0a12.5 12.5 0 0 1 25 0a12.5 12.5 0 0 1 25 0"/>
+<path d="M340 90L352 98L328 114L352 130L328 146L352 162L340 170"/>
+<path d="M485 112H515M485 128H515"/>
+<circle cx="110" cy="130" r="26"/><path d="M96 130q7-14 14 0t14 0"/>
+<g fill="currentColor" stroke="none"><circle cx="340" cy="50" r="3.5"/><circle cx="340" cy="210" r="3.5"/></g>
+<g stroke="var(--cur)" stroke-width="2.5"><path d="M92 34H140" marker-end="url(#ma)"/><path d="M370 34H440" marker-end="url(#ma)"/><path d="M312 100V160" marker-end="url(#ma)"/></g>
+<g fill="currentColor" stroke="none" font-size="15">
+<text x="72" y="122" text-anchor="end">Vₛ</text><text x="72" y="142" text-anchor="end">100∠θ V</text>
+<text x="200" y="24" text-anchor="middle">j10 Ω</text><text x="362" y="136">10 Ω</text>
+<text x="482" y="125" text-anchor="end">−j20 Ω</text>
+<text x="524" y="112">+</text><text x="524" y="136">V₁</text><text x="524" y="164">−</text>
+<g fill="var(--cur)" font-weight="700"><text x="116" y="26" text-anchor="middle">I₂</text><text x="405" y="26" text-anchor="middle">I₃</text><text x="304" y="134" text-anchor="end">I₁</text></g></g></svg>
+<div class="legend"><span class="cur">● corrientes (escala 7,5 cm = I₁)</span><span class="vol">● tensiones (escala 5 cm = V₁)</span></div></div>
+</section>
+
+<section class="slide">
+<h1>Teoría que usamos</h1>
+<div class="card"><span class="acc">R</span>: V e I en fase &nbsp;·&nbsp; <span class="acc">C</span>: I adelanta 90° a V &nbsp;·&nbsp; <span class="acc">L</span>: V adelanta 90° a I<br>×j gira +90° &nbsp;·&nbsp; ÷j gira −90° &nbsp;·&nbsp; 1/(−j) = +j</div>
+<div class="card"><h2>Mallas (horarias) y regla de Kramer</h2>
+Sistema A·x = b con x = (I<sub>a</sub>, I<sub>b</sub>):
+<div class="eq">I<sub>a</sub> = Δ₁/Δ &nbsp;,&nbsp; I<sub>b</sub> = Δ₂/Δ</div>
+Δ = determinante de A; Δᵢ = A con la columna i reemplazada por b.
+<br>Aquí <span class="cur">I₂ = I<sub>a</sub></span>, <span class="cur">I₃ = I<sub>b</sub></span> e <span class="cur">I₁ = I<sub>a</sub> − I<sub>b</sub></span>.</div>
+</section>
+
+<section class="slide">
+<h1>Método A · Directo, en función de V₁</h1>
+<div class="card eq">① <span class="cur">I₁</span> = V₁/10 = <b>0,1·V₁</b> &nbsp;<small>(resistor: en fase)</small><br>
+② <span class="cur">I₃</span> = V₁/(−j20) = <b>j0,05·V₁</b> &nbsp;<small>(capacitor: adelanta 90°)</small><br>
+③ <span class="cur">I₂</span> = I₁ + I₃ = V₁(0,1 + j0,05) = <b>0,1118·V₁∠26,57°</b> &nbsp;<small>(LKC)</small><br>
+④ <span class="vl">V_L</span> = j10·I₂ = V₁(−0,5 + j1) = <b>1,118·V₁∠116,57°</b> &nbsp;<small>(bobina)</small><br>
+⑤ <span class="vol">Vₛ</span> = V_L + V₁ = V₁(0,5 + j1) = <b>1,118·V₁∠63,43°</b> &nbsp;<small>(LKT)</small></div>
+<div class="card">Ya con V₁ como referencia (0°). Las <b>relaciones</b> dan las longitudes:<br>
+I₃/I₁ = 0,05/0,1 = 0,5 → 0,5 × 7,5 = <span class="cur">3,75 cm</span> &nbsp;·&nbsp; I₂/I₁ = 1,118 → 1,118 × 7,5 = <span class="cur">8,39 cm</span> &nbsp;·&nbsp; Vₛ/V₁ = 1,118 → 1,118 × 5 = <span class="vol">5,59 cm</span></div>
+</section>
+
+<section class="slide">
+<h1>Método B · Mallas: ecuaciones (Vₛ = 100∠0°)</h1>
+<div class="card eq">Malla 1: &nbsp;(10 + j10)·I<sub>a</sub> − 10·I<sub>b</sub> = 100<br>Malla 2: &nbsp;−10·I<sub>a</sub> + (10 − j20)·I<sub>b</sub> = 0</div>
+<div class="card big row">
+<span class="mat"><span>10+j10</span><span>−10</span><span>−10</span><span>10−j20</span></span>
+<span class="mat"><span>I<sub>a</sub></span><span> </span><span>I<sub>b</sub></span><span> </span></span> =
+<span class="mat"><span>100</span><span> </span><span>0</span><span> </span></span></div>
+<div class="card">Se usa Vₛ = 100∠0° para resolver; después se <b>gira todo</b> para que V₁ quede en 0°: lo que cambia es solo el ángulo de referencia, no las relaciones.</div>
+</section>
+
+<section class="slide">
+<h1>Método B · Regla de Kramer</h1>
+<div class="card eq"><span class="acc">Δ</span> = (10+j10)(10−j20) − (−10)(−10) = 300 − j100 − 100 = <b>200 − j100</b> = 223,6∠−26,57°</div>
+<div class="card eq"><span class="acc">Δ₁</span> = 100·(10−j20) − (−10)(0) = <b>1000 − j2000</b><br>
+<span class="cur">I₂ = I<sub>a</sub></span> = Δ₁/Δ = (1000−j2000)/(200−j100) = <b>8 − j6 = 10∠−36,87° A</b></div>
+<div class="card eq"><span class="acc">Δ₂</span> = (10+j10)·0 − (−10)(100) = <b>1000</b><br>
+<span class="cur">I₃ = I<sub>b</sub></span> = Δ₂/Δ = 1000/(200−j100) = <b>4 + j2 = 4,472∠26,57° A</b></div>
+<div class="card eq"><span class="cur">I₁</span> = I<sub>a</sub> − I<sub>b</sub> = <b>4 − j8 = 8,944∠−63,43° A</b> &nbsp;→&nbsp; <span class="vol">V₁</span> = 10·I₁ = <b>40 − j80 V = 89,44∠−63,43° V</b></div>
+</section>
+
+<section class="slide">
+<h1>Resultados: ambos métodos coinciden</h1>
+<div class="card">Método A ya sale con V₁ en 0°. En el método B se resta −63,43° a todos los ángulos (se gira el diagrama +63,43°).</div>
+<table><tr><th>Fasor</th><th>Módulo real</th><th>Ángulo (ref. V₁)</th><th>Longitud en el dibujo</th></tr>
+<tr><td class="vol">V₁</td><td>89,44 V</td><td>0°</td><td>5 cm (dato)</td></tr>
+<tr><td class="cur">I₁</td><td>8,944 A</td><td>0°</td><td>7,5 cm (dato)</td></tr>
+<tr><td class="cur">I₃</td><td>4,472 A</td><td>+90°</td><td>4,472/8,944 × 7,5 = <b>3,75 cm</b></td></tr>
+<tr><td class="cur">I₂</td><td>10 A</td><td>+26,57°</td><td>10/8,944 × 7,5 = <b>8,39 cm</b></td></tr>
+<tr><td class="vol">Vₛ</td><td>100 V</td><td>+63,43°</td><td>100/89,44 × 5 = <b>5,59 cm</b></td></tr></table>
+<div class="res">I₃ = 3,75 cm · I₂ ≈ 8,39 cm · Vₛ ≈ 5,59 cm</div>
+</section>
+
+<section class="slide" id="dg">
+<h1>Diagrama fasorial (clic / → para construir)</h1>
+<svg viewBox="0 0 520 340" id="sv">
+<defs>
+<marker id="mc" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--cur)"/></marker>
+<marker id="mv" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--vol)"/></marker>
+<marker id="ml" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--vl)"/></marker>
+</defs>
+<g stroke="var(--grid)" stroke-width="1" id="gr"></g>
+<g stroke="var(--mut)" stroke-width="1.5"><path d="M50 300H510M50 300V20"/></g>
+<g fill="var(--mut)" font-size="12"><text x="495" y="316">Re [cm]</text><text x="14" y="26">Im</text></g>
+<g stroke-width="3.5" fill="none" font-size="15" font-weight="700">
+<g class="st" data-s="1"><path d="M50 300H425" stroke="var(--cur)" marker-end="url(#mc)" transform="translate(0,6)"/><text x="190" y="334" fill="var(--cur)">I₁ = 7,5 cm</text></g>
+<g class="st" data-s="2"><path d="M50 300V112" stroke="var(--cur)" marker-end="url(#mc)"/><text x="58" y="215" fill="var(--cur)">I₃ = 3,75 cm</text></g>
+<g class="st" data-s="3"><path d="M50 300L425 112" stroke="var(--cur)" marker-end="url(#mc)" stroke-dasharray="0"/><path d="M425 112V300M50 112H425" stroke="var(--cur)" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/><text x="270" y="195" fill="var(--cur)">I₂ = 8,39 cm</text></g>
+<g class="st" data-s="4"><path d="M50 300H300" stroke="var(--vol)" marker-end="url(#mv)"/><text x="130" y="290" fill="var(--vol)">V₁ = 5 cm</text></g>
+<g class="st" data-s="5"><path d="M300 300L175 50" stroke="var(--vl)" marker-end="url(#ml)"/><text x="260" y="130" fill="var(--vl)">V_L = j10·I₂</text></g>
+<g class="st" data-s="6"><path d="M50 300L175 50" stroke="var(--vol)" marker-end="url(#mv)"/><text x="58" y="120" fill="var(--vol)">Vₛ = 5,59 cm</text><path d="M110 300A60 60 0 0 0 77 247" stroke="var(--vol)" stroke-width="2"/><text x="112" y="270" font-size="12" fill="var(--vol)">63,43°</text></g>
+</g></svg>
+<div class="legend card" id="cap"></div>
+</section>
+
+<section class="slide">
+<h1>Para tener presente</h1>
+<div class="card">✔ <b>Dos escalas</b>: una para tensiones y otra para corrientes.<br>✔ I₂ = I₁ + I₃ es <b>suma de fasores</b> (no 7,5 + 3,75).<br>✔ En la bobina, V<sub>L</sub> <b>adelanta</b> 90° a I₂; en el capacitor, I₃ adelanta 90° a V₁.<br>✔ Triángulo V₁–V<sub>L</sub>–Vₛ <b>isósceles</b>: |V<sub>L</sub>| = |Vₛ| porque X<sub>L</sub> = R = 10 Ω.<br>✔ El método directo (A) y Kramer (B) dan los mismos resultados.</div>
+<div class="res">I₃ = 3,75 cm · I₂ = 8,39 cm · Vₛ = 5,59 cm</div>
+</section>
+
+<nav><button class="alt" id="pv">← Atrás</button><button id="nx">Siguiente →</button><button class="alt" id="th">☀/🌙</button></nav>
+
+<script>
+(function(){
+var S=document.querySelectorAll('.slide'),i=0,sub=0,MAX=6;
+var cap=["Vacío: ejes real e imaginario (1 cm = 50 px).","Primero I₁: está en fase con V₁ (resistor) → 7,5 cm sobre el eje real.","I₃ adelanta 90° (capacitor) → vertical, 3,75 cm.","I₂ = I₁ + I₃ por paralelogramo → 8,39 cm a 26,57°.","Ahora tensiones (otra escala): V₁ = 5 cm, referencia 0°.","V_L = j10·I₂: perpendicular a I₂ (adelanta 90°), parte de la punta de V₁.","Vₛ = V₁ + V_L cierra el triángulo: 5,59 cm a 63,43°."];
+var g=document.getElementById('gr'),h='';
+for(var k=0;k<=9;k++){h+='<path d="M'+(50+k*50)+' 20V300"/>';}
+for(var k=0;k<=5;k++){h+='<path d="M50 '+(300-k*50)+'H510"/>';}
+g.innerHTML=h;
+function draw(){
+ S.forEach(function(s,k){s.classList.toggle('on',k===i)});
+ document.getElementById('ct').textContent=(i+1)+' / '+S.length;
+ if(S[i].id==='dg'){
+  document.querySelectorAll('.st').forEach(function(e){e.style.display=(+e.dataset.s<=sub)?'':'none'});
+  document.getElementById('cap').textContent=cap[sub];
+ }
+}
+function nx(){ if(S[i].id==='dg'&&sub<MAX){sub++;} else if(i<S.length-1){i++;sub=(S[i].id==='dg')?0:sub;} draw();}
+function pv(){ if(S[i].id==='dg'&&sub>0){sub--;} else if(i>0){i--; if(S[i].id==='dg')sub=MAX;} draw();}
+document.getElementById('nx').onclick=nx;document.getElementById('pv').onclick=pv;
+document.getElementById('sv').onclick=nx;
+document.getElementById('th').onclick=function(){var r=document.documentElement;var d=getComputedStyle(r).colorScheme.indexOf('dark')>-1;r.setAttribute('data-theme',d?'light':'dark');};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();nx();}if(e.key==='ArrowLeft')pv();});
+draw();
+})();
+</script>
+</body>
+</html>
